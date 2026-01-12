@@ -325,10 +325,10 @@ def main():
     print(f"\nCleaned data saved to: {output_file}")
 
     # Also save detailed versions for each dataset
-    df_hours.to_csv(os.path.join(OUTPUT_DIR, 'teacher_hours_clean.csv'), index=False)
-    df_class.to_csv(os.path.join(OUTPUT_DIR, 'class_size_clean.csv'), index=False)
-    df_expenditure.to_csv(os.path.join(OUTPUT_DIR, 'expenditure_clean.csv'), index=False)
-    df_grad.to_csv(os.path.join(OUTPUT_DIR, 'graduation_rates_clean.csv'), index=False)
+    df_hours.to_csv(os.path.join(OUTPUT_DIR, 'clean_teacher_hours.csv'), index=False)
+    df_class.to_csv(os.path.join(OUTPUT_DIR, 'clean_class_size.csv'), index=False)
+    df_expenditure.to_csv(os.path.join(OUTPUT_DIR, 'clean_expenditure.csv'), index=False)
+    df_grad.to_csv(os.path.join(OUTPUT_DIR, 'clean_graduation_rates.csv'), index=False)
 
     print("Individual cleaned datasets also saved")
 
