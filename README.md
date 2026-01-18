@@ -23,34 +23,36 @@ graduation rates among the three factors examined.
 
 ## Repository Structure
 
-Graduation Rate Influencers
-> Cleaned_Data
+Root: Graduation Rate Influencers
+Directory: Cleaned_Data
     - clean_class_size.csv
     - clean_expenditure.csv
     - clean_graduation_influencers.csv
     - clean_graduation_rates.csv
     - clean_teacher_hours.csv
-> Papers
+Directory: Papers
     - Graduation Rate Influencers - Results.docx
     - Graduation Rate Influencers - The Proposal.docx
-> Raw_Data
+Directory: Raw_Data
     - OECD_Avg_Class_Size.csv
     - OECD_Hours_2017.XLSX
     - OECD_Hours_2018.XLSX
     - OECD_Hours_2019.XLSX
     - UNESCO_Graduation_Rates.csv
     - WB_Expenditures.csv
-> Results
+Directory: Results
     - correlation_heatmap.png
     - country_comparison.png
     - diagnostics.png
     - distributions.png
     - graduation_trends.png
     - scatterplots.png
-> Scripts
+    - statistical_results.txt
+Directory: Scripts
     - Analysis.py
     - Cleaning_Merging.py
 README.md (this file)
+requirements.txt
 
 ## Methodology
 
@@ -187,129 +189,118 @@ What it does:
 9. Saves results to `Graduation-Rate-Influencers/Results/` folder
 
 Outputs:
-- 6 visualization files (PNG format) in `Results/Visualizations/`
+- 6 visualization files (PNG format) in `Results`
 - `statistical_output.txt` with complete analysis results
 
----
-
-## 📊 Visualizations
+## Visualizations
 
 ### 1. Correlation Heatmap
-![Correlation Heatmap](Results/Visualizations/correlation_heatmap.png)
+[Correlation Heatmap](Results/correlation_heatmap.png)
 
-Shows relationships between all variables. Key finding: Strong positive correlation between expenditure and graduation rates (r = 0.859).
+Shows relationships between all variables. 
+Key finding: Strong positive correlation between expenditure and graduation rates (r = 0.859).
 
 ### 2. Expenditure vs. Graduation Rates
-![Expenditure Scatter Plot](Results/Visualizations/expenditure_scatter.png)
+[Expenditure Scatter Plot](Results/scatterplots.png)
 
 Clear positive linear relationship supporting the regression finding.
 
 ### 3. Country Comparison
-![Country Comparison](Results/Visualizations/country_comparison.png)
+[Country Comparison](Results/country_comparison.png)
 
 France: Highest expenditure (5.4% GDP) → Highest graduation rates (87.5%)  
 Germany: Lowest expenditure (4.9% GDP) → Lowest graduation rates (79.5%)
 
 ### 4. Regression Diagnostics
-![Residual Plot](Results/Visualizations/residual_plot.png)
-![Q-Q Plot](Results/Visualizations/qq_plot.png)
+[Residual Plot](Results/diagnostics.png)
+[Q-Q Plot](Results/diagnostics.png)
 
 Model assumptions verified:
-- ✅ Normality of residuals (Shapiro-Wilk p = 0.114)
-- ✅ Homoscedasticity (random residual pattern)
-- ⚠️ Multicollinearity detected (teacher hours & class size: r = 0.996)
+- Normality of residuals (Shapiro-Wilk p = 0.114)
+- Homoscedasticity (random residual pattern)
+- Multicollinearity detected (teacher hours & class size: r = 0.996)
 
----
-
-## 🎓 Policy Recommendations
+## Policy Recommendations
 
 ### Recommendation 1: Prioritize Strategic Education Funding Increases
 
-**Evidence:** Education expenditure is the only statistically significant predictor (p = 0.012), with both statistical and practical significance.
+Evidence: 
+Education expenditure is the only statistically significant 
+predictor (p = 0.012), with both statistical and practical significance.
 
-**Specific Action:**
+Specific Action:
 - Countries spending below 5% of GDP on education should target increases toward 5.5-6%
 - Each 0.5 percentage point increase could improve graduation rates by ~6 percentage points
 - Track which spending categories (teacher salaries, infrastructure, materials) drive improvements
 
-**Example:** Germany could potentially increase graduation rates from 79.5% to 85.6% by matching France's expenditure level (4.9% → 5.4% of GDP).
-
----
+Example: 
+Germany could potentially increase graduation rates from 79.5% to 85.6% by matching France's 
+expenditure level (4.9% → 5.4% of GDP).
 
 ### Recommendation 2: Investigate Education Spending Composition
 
-**Evidence:** The analysis found no significant relationship between teacher hours or class size and graduation rates when controlling for expenditure. High multicollinearity (r = 0.996) suggests these factors move together.
+Evidence: 
+The analysis found no significant relationship between teacher working hours or class size and 
+graduation rates when controlling for expenditure. High multicollinearity (r = 0.996) suggests 
+these factors move together.
 
-**Specific Action:**
+Specific Action:
 - Conduct detailed audits of education spending allocation
 - Compare spending composition across high-performing vs. low-performing systems
-- Focus on **how** money is spent rather than just total amount
+- Focus on how money is spent rather than just total amount
 - Research suggests quality of spending matters as much as quantity
 
-**Rationale:** Simply mandating smaller class sizes or longer teacher hours may not improve outcomes. Strategic resource allocation is key.
+Rationale: 
+Simply mandating smaller class sizes or longer teacher hours may not improve outcomes. 
+Strategic resource allocation is key.
 
----
+## Limitations
 
-## ⚠️ Limitations
+1. Small Sample Size: Only 9 observations (3 countries × 3 years) limits statistical power and 
+   generalizability
+2. Limited Geographic Scope: Results apply only to Germany, France, and UK; may not generalize 
+   to other education systems
+3. Short Time Period: 3-year timeframe may not capture long-term policy effects
+4. Correlation, Not Causation: Regression shows associations, not causal relationships
+5. Multicollinearity: High correlation between teacher hours and class size (r = 0.996) makes it
+   difficult to separate their effects
+6. Aggregate Data: National-level data obscures within-country variation (regional, socioeconomic
+   differences)
+7. Limited Control Variables: Does not account for other factors affecting graduation rates 
+   (student SES, prior achievement, curriculum quality)
 
-1. **Small Sample Size**: Only 9 observations (3 countries × 3 years) limits statistical power and generalizability
-2. **Limited Geographic Scope**: Results apply only to Germany, France, and UK; may not generalize to other education systems
-3. **Short Time Period**: 3-year timeframe may not capture long-term policy effects
-4. **Correlation, Not Causation**: Regression shows associations, not causal relationships
-5. **Multicollinearity**: High correlation between teacher hours and class size (r = 0.996) makes it difficult to separate their effects
-6. **Aggregate Data**: National-level data obscures within-country variation (regional, socioeconomic differences)
-7. **Limited Control Variables**: Does not account for other factors affecting graduation rates (student SES, prior achievement, curriculum quality)
+## Future Research
 
----
+1. Expand Sample: Include more countries and longer time periods for greater statistical power
+2. Longitudinal Analysis: Track policy changes over time to assess causal effects
+3. Spending Composition: Break down expenditure into specific categories (salaries, infrastructure, materials)
+4. Multilevel Modeling: Account for within-country variation (regional, school-level differences)
+5. Qualitative Research: Investigate how high-performing countries allocate resources effectively
+6. Interaction Effects: Examine whether expenditure effects vary by country context or existing resource levels
 
-## 🔮 Future Research
+## References
 
-1. **Expand Sample**: Include more countries and longer time periods for greater statistical power
-2. **Longitudinal Analysis**: Track policy changes over time to assess causal effects
-3. **Spending Composition**: Break down expenditure into specific categories (salaries, infrastructure, materials)
-4. **Multilevel Modeling**: Account for within-country variation (regional, school-level differences)
-5. **Qualitative Research**: Investigate how high-performing countries allocate resources effectively
-6. **Interaction Effects**: Examine whether expenditure effects vary by country context or existing resource levels
+Antoniou, F., Alghamdi, M. H., & Kawai, K. (2024). 
+The effect of school size and class size on school preparedness. 
+*Frontiers in Psychology*, *15*, Article 1354072. https://doi.org/10.3389/fpsyg.2024.1354072
 
----
+Boeskens, L., & Nusche, D. (2021). 
+*Not enough hours in the day: Policies that shape teachers' use of time* 
+(OECD Education Working Papers, No. 245). OECD Publishing. https://doi.org/10.1787/15990b42-en
 
-## 📚 References
+OECD. (2023). 
+*Education at a Glance 2023: OECD Indicators*. 
+OECD Publishing. https://doi.org/10.1787/e13bef63-en
 
-Antoniou, F., Alghamdi, M. H., & Kawai, K. (2024). The effect of school size and class size on school preparedness. *Frontiers in Psychology*, *15*, Article 1354072. https://doi.org/10.3389/fpsyg.2024.1354072
+## Author
 
-Boeskens, L., & Nusche, D. (2021). *Not enough hours in the day: Policies that shape teachers' use of time* (OECD Education Working Papers, No. 245). OECD Publishing. https://doi.org/10.1787/15990b42-en
-
-OECD. (2023). *Education at a Glance 2023: OECD Indicators*. OECD Publishing. https://doi.org/10.1787/e13bef63-en
-
----
-
-## 👤 Author
-
-**Ashley Hunter**  
+Ashley Hunter
 Western Governors University  
-Bachelor of Science in Data Analytics  
-Expected Graduation: February 2026
+Bachelor of Science in Data Analytics
 
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Western Governors University for academic guidance and support
 - OECD, World Bank, and UNESCO for providing publicly accessible education data
-- Python open-source community for excellent data analysis tools
-
----
-
-## 📞 Contact
-
-For questions or collaboration opportunities, please open an issue in this repository.
-
----
 
 **Last Updated:** January 2026
