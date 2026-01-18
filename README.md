@@ -24,23 +24,23 @@ graduation rates among the three factors examined.
 ## Repository Structure
 
 Root: Graduation Rate Influencers
-Directory: Cleaned_Data
+- Directory: Cleaned_Data
     - clean_class_size.csv
     - clean_expenditure.csv
     - clean_graduation_influencers.csv
     - clean_graduation_rates.csv
     - clean_teacher_hours.csv
-Directory: Papers
+- Directory: Papers
     - Graduation Rate Influencers - Results.docx
     - Graduation Rate Influencers - The Proposal.docx
-Directory: Raw_Data
+- Directory: Raw_Data
     - OECD_Avg_Class_Size.csv
     - OECD_Hours_2017.XLSX
     - OECD_Hours_2018.XLSX
     - OECD_Hours_2019.XLSX
     - UNESCO_Graduation_Rates.csv
     - WB_Expenditures.csv
-Directory: Results
+- Directory: Results
     - correlation_heatmap.png
     - country_comparison.png
     - diagnostics.png
@@ -48,11 +48,11 @@ Directory: Results
     - graduation_trends.png
     - scatterplots.png
     - statistical_results.txt
-Directory: Scripts
+- Directory: Scripts
     - Analysis.py
     - Cleaning_Merging.py
-README.md (this file)
-requirements.txt
+- README.md (this file)
+- requirements.txt
 
 ## Methodology
 
@@ -137,14 +137,14 @@ Non-Significant Findings:
 
 ### Prerequisites
 
-Python 3.12+
-pandas >= 2.1.0
-numpy >= 1.24.0
-matplotlib >= 3.7.0
-seaborn >= 0.12.0
-scipy >= 1.11.0
-scikit-learn >= 1.3.0
-openpyxl >= 3.1.0
+- Python 3.12+
+- pandas >= 2.1.0
+- numpy >= 1.24.0
+- matplotlib >= 3.7.0
+- seaborn >= 0.12.0
+- scipy >= 1.11.0
+- scikit-learn >= 1.3.0
+- openpyxl >= 3.1.0
 
 ### Installation
 
@@ -156,7 +156,6 @@ cd Graduation-Rate-Influencers
 ```bash
 pip install -r requirements.txt
 ```
-
 ### Running the Analysis
 
 Step 1: Data Cleaning & Merging
