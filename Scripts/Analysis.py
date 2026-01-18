@@ -4,11 +4,22 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score, mean_squared_error
-from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_squared_error
+import os
 import warnings
 
+from Scripts.Cleaning_Merging import DATA_DIR
+
 warnings.filterwarnings('ignore')
+
+# Get directory where script is
+Script_Dir = os.path.dirname(os.path.abspath(__file__))
+# Get the project root
+Project_Root = os.path.dirname(Script_Dir)
+
+# Defining paths
+Results_Dir = os.path.join(Project_Root, 'Results')
+Data_Dir = os.path.join(Project_Root, 'Cleaned_Data')
 
 # Set style for better-looking plots
 sns.set_style("whitegrid")
@@ -19,10 +30,10 @@ plt.rcParams['font.size'] = 10
 
 def load_data():
     """Load the cleaned capstone dataset"""
-    df = pd.read_csv('./Cleaned_Data/clean_graduation_influencers.csv')
-    print("=" * 80)
+    df = pd.read_csv(os.path.join(Data_Dir, 'clean_graduation_influencers.csv'))
+    print("*" * 80)
     print("DATA LOADED")
-    print("=" * 80)
+    print("*" * 80)
     print(f"\nDataset shape: {df.shape}")
     print(f"\nColumns: {df.columns.tolist()}")
     print(f"\nFirst few rows:")
@@ -37,8 +48,9 @@ def load_data():
 
 def descriptive_statistics(df):
     """Calculate and display descriptive statistics"""
+    print("*" * 50)
     print("DESCRIPTIVE STATISTICS")
-    print("=" * 80)
+    print("*" * 50)
 
     # Select numeric columns
     numeric_cols = ['graduation_rate', 'teacher_hours', 'class_size', 'expenditure_pct_gdp']
@@ -48,7 +60,7 @@ def descriptive_statistics(df):
 
     # Statistics by country
     print("\n\nStatistics by Country:")
-    print("-" * 80)
+    print("-" * 50)
     for country in df['country'].unique():
         country_data = df[df['country'] == country]
         country_name = country_data['country_name'].iloc[0]
@@ -57,17 +69,18 @@ def descriptive_statistics(df):
 
     # Statistics by year
     print("\n\nStatistics by Year:")
-    print("-" * 80)
+    print("-" * 50)
     for year in sorted(df['year'].unique()):
         year_data = df[df['year'] == year]
         print(f"\n{year}:")
         print(year_data[numeric_cols].describe().round(2))
 
 
-def create_visualizations(df, output_dir='./Results'):
+def create_visualizations(df, output_dir=Results_Dir):
     """Create comprehensive visualizations"""
+    print("*" * 50)
     print("CREATING VISUALIZATIONS")
-    print("=" * 80)
+    print("*" * 50)
 
     ######## Distribution of variables ########
     fig, axes = plt.subplots(2, 2, figsize=(14, 10))
@@ -167,7 +180,7 @@ def create_visualizations(df, output_dir='./Results'):
 
     plt.tight_layout()
     plt.savefig(f'{output_dir}/scatterplots.png', dpi=300, bbox_inches='tight')
-    print(f"  ✓ Saved: scatterplots.png")
+    print(f"Saved: scatterplots.png")
     plt.close()
 
     # 5. Country comparison - all variables
@@ -199,21 +212,22 @@ def create_visualizations(df, output_dir='./Results'):
 
     plt.tight_layout()
     plt.savefig(f'{output_dir}/country_comparison.png', dpi=300, bbox_inches='tight')
-    print(f"  ✓ Saved: country_comparison.png")
+    print(f"Saved: country_comparison.png")
     plt.close()
 
 ######## CORRELATION ANALYSIS ########
 
 def correlation_analysis(df):
     """Perform detailed correlation analysis"""
+    print("*" * 50)
     print("CORRELATION ANALYSIS")
-    print("=" * 80)
+    print("*" * 50)
 
     numeric_cols = ['graduation_rate', 'teacher_hours', 'class_size', 'expenditure_pct_gdp']
 
     # Pearson correlation
     print("\nPearson Correlation Coefficients:")
-    print("-" * 80)
+    print("-" * 50)
 
     for col in ['teacher_hours', 'class_size', 'expenditure_pct_gdp']:
         corr, p_value = stats.pearsonr(df[col], df['graduation_rate'])
@@ -250,7 +264,7 @@ def correlation_analysis(df):
 
     # Full correlation matrix
     print("\n\nFull Correlation Matrix:")
-    print("-" * 80)
+    print("-" * 50)
     corr_matrix = df[numeric_cols].corr()
     print(corr_matrix.round(4))
 
@@ -258,8 +272,9 @@ def correlation_analysis(df):
 
 def multiple_regression_analysis(df):
     """Perform multiple linear regression analysis using sklearn and scipy"""
+    print("*" * 50)
     print("MULTIPLE LINEAR REGRESSION ANALYSIS")
-    print("=" * 80)
+    print("*" * 50)
 
     # Prepare data
     X = df[['teacher_hours', 'class_size', 'expenditure_pct_gdp']].values
@@ -318,7 +333,7 @@ def multiple_regression_analysis(df):
     # Print results
     print("\n")
     print("REGRESSION RESULTS")
-    print("=" * 80)
+    print("-" * 50)
 
     print(f"\nModel Summary:")
     print(f"Dependent Variable: graduation_rate")
@@ -334,7 +349,7 @@ def multiple_regression_analysis(df):
 
     print(f"\n\nCoefficients:")
     print(f"{'Variable':<25} {'Coef':>10} {'Std Err':>10} {'t':>8} {'P>|t|':>10} {'[0.025':>10} {'0.975]':>10}")
-    print("-" * 90)
+    print("-" * 50)
 
     # Intercept
     print(
@@ -358,14 +373,15 @@ def multiple_regression_analysis(df):
 
     # Additional interpretations
     print("\n")
+    print("*" * 50)
     print("MODEL INTERPRETATION")
-    print("=" * 80)
+    print("*" * 50)
 
     print(f"\nR-squared: {r_squared:.4f}")
-    print(f"  → The model explains {r_squared * 100:.2f}% of variance in graduation rates")
+    print(f"*The model explains {r_squared * 100:.2f}% of variance in graduation rates")
 
     print(f"\nAdjusted R-squared: {adj_r_squared:.4f}")
-    print(f"  → Adjusted for number of predictors: {adj_r_squared * 100:.2f}%")
+    print(f"*Adjusted for number of predictors: {adj_r_squared * 100:.2f}%")
 
     print(f"\nF-statistic: {f_statistic:.4f} (p-value: {f_pvalue:.6f})")
     if f_pvalue < 0.05:
@@ -374,7 +390,7 @@ def multiple_regression_analysis(df):
         print("The model is NOT statistically significant overall")
 
     print("\n\nCOEFFICIENT INTERPRETATION:")
-    print("-" * 80)
+    print("-" * 50)
 
     for i, var in enumerate(feature_names):
         coef = model_sklearn.coef_[i]
@@ -429,11 +445,12 @@ def multiple_regression_analysis(df):
 
 ######## MODEL DIAGNOSTICS ########
 
-def model_diagnostics(model, X, y, output_dir='./Results'):
+def model_diagnostics(model, X, y, output_dir=Results_Dir):
     """Perform model diagnostic checks"""
     print("\n")
+    print("*" * 50)
     print("MODEL DIAGNOSTICS")
-    print("=" * 80)
+    print("*" * 50)
 
     # Get residuals
     residuals = model['residuals']
@@ -479,7 +496,7 @@ def model_diagnostics(model, X, y, output_dir='./Results'):
 
     # Test for normality (Shapiro-Wilk)
     print("\n\nNormality Test (Shapiro-Wilk):")
-    print("-" * 80)
+    print("-" * 50)
     stat, p_value = stats.shapiro(residuals)
     print(f"Statistic: {stat:.4f}")
     print(f"P-value:   {p_value:.4f}")
@@ -490,7 +507,7 @@ def model_diagnostics(model, X, y, output_dir='./Results'):
 
     # Check for multicollinearity using correlation matrix
     print("\n\nMulticollinearity Check (Correlation Between Predictors):")
-    print("-" * 80)
+    print("-" * 50)
     X_df = pd.DataFrame(X, columns=['teacher_hours', 'class_size', 'expenditure_pct_gdp'])
     corr_matrix = X_df.corr()
     print(corr_matrix.round(4))
@@ -504,11 +521,12 @@ def model_diagnostics(model, X, y, output_dir='./Results'):
 def hypothesis_testing(df, model):
     """Formal hypothesis testing for each predictor"""
     print("\n")
+    print("*" * 50)
     print("HYPOTHESIS TESTING")
-    print("=" * 80)
+    print("*" * 50)
 
     print("\n\nPRIMARY HYPOTHESIS:")
-    print("-" * 80)
+    print("-" * 50)
     print("H0: Class size, teacher working hours, and education expenditure")
     print("    do NOT have a significant impact on graduation rates")
     print("H1: At least one of these factors has a significant impact on")
@@ -528,7 +546,7 @@ def hypothesis_testing(df, model):
 
     # Individual t-tests
     print("\n\nINDIVIDUAL PREDICTOR TESTS:")
-    print("-" * 80)
+    print("-" * 50)
 
     predictors = ['teacher_hours', 'class_size', 'expenditure_pct_gdp']
     predictor_names = {
@@ -563,8 +581,9 @@ def hypothesis_testing(df, model):
 def predictions_and_practical_significance(model, df):
     """Make predictions and assess practical significance"""
     print("\n")
+    print("*" * 50)
     print("PREDICTIONS AND PRACTICAL SIGNIFICANCE")
-    print("=" * 80)
+    print("*" * 50)
 
     # Get predictions
     predictions = model['fittedvalues']
@@ -579,7 +598,7 @@ def predictions_and_practical_significance(model, df):
     })
 
     print("\n\nACTUAL VS PREDICTED GRADUATION RATES:")
-    print("-" * 80)
+    print("-" * 50)
     print(results_df.to_string(index=False))
 
     # Calculate RMSE and MAE
@@ -592,7 +611,7 @@ def predictions_and_practical_significance(model, df):
 
     # Practical significance examples
     print("\n\nPRACTICAL SIGNIFICANCE EXAMPLES:")
-    print("-" * 80)
+    print("-" * 50)
     print("\nIf a country were to change one factor, holding others constant:")
 
     for var in ['teacher_hours', 'class_size', 'expenditure_pct_gdp']:
@@ -603,17 +622,17 @@ def predictions_and_practical_significance(model, df):
             if 'teacher' in var:
                 change = 100  # 100 hours
                 effect = coef * change
-                print(f"\n• Increase teacher working hours by {change} hours:")
+                print(f"\nIncrease teacher working hours by {change} hours:")
                 print(f"  Expected change in graduation rate: {effect:+.2f} percentage points")
             elif 'class' in var:
                 change = 5  # 5 students
                 effect = coef * change
-                print(f"\n• Increase average class size by {change} students:")
+                print(f"\nIncrease average class size by {change} students:")
                 print(f"  Expected change in graduation rate: {effect:+.2f} percentage points")
             elif 'expenditure' in var:
                 change = 1  # 1% of GDP
                 effect = coef * change
-                print(f"\n• Increase education expenditure by {change}% of GDP:")
+                print(f"\nIncrease education expenditure by {change}% of GDP:")
                 print(f"  Expected change in graduation rate: {effect:+.2f} percentage points")
 
 ######## SUMMARY REPORT ########
@@ -621,23 +640,24 @@ def predictions_and_practical_significance(model, df):
 def create_summary_report(df, model):
     """Create a comprehensive summary report"""
     print("\n")
+    print("*" * 50)
     print("COMPREHENSIVE SUMMARY REPORT")
-    print("=" * 80)
+    print("*" * 50)
 
     print("\n\nRESEARCH QUESTION:")
-    print("-" * 80)
+    print("-" * 50)
     print("Do class size, hours that teachers work, and education expenditures")
     print("have an impact on graduation rates?")
 
     print("\n\nDATASET OVERVIEW:")
-    print("-" * 80)
+    print("-" * 50)
     print(f"Countries: Germany, France, United Kingdom (3 G20 countries)")
     print(f"Time Period: 2017-2019 (3 years)")
     print(f"Total Observations: {len(df)}")
     print(f"Variables: 4 (graduation rate + 3 factors)")
 
     print("\n\nKEY FINDINGS:")
-    print("-" * 80)
+    print("-" * 50)
 
     # Overall model
     print(f"\nOverall Model:")
@@ -661,8 +681,8 @@ def create_summary_report(df, model):
         print(f"P-value: {p_val:.6f}")
         print(f"Significant: {'YES' if p_val < 0.05 else 'NO'}")
 
-    print("\n\nCONCLUSIONS:")
-    print("-" * 80)
+    print("\nCONCLUSIONS:")
+    print("-" * 50)
 
     # Determine which hypothesis is supported
     sig_predictors = []
@@ -671,8 +691,8 @@ def create_summary_report(df, model):
             sig_predictors.append(var.replace('_', ' '))
 
     if len(sig_predictors) > 0:
-        print(f"\nThe analysis provides evidence that the following factors")
-        print(f"significantly influence graduation rates:")
+        print(f"\nThe analysis provides evidence that the following factor(s) significantly")
+        print(f"influence graduation rates:")
         for pred in sig_predictors:
             print(f"{pred.title()}")
     else:
@@ -684,10 +704,12 @@ def create_summary_report(df, model):
 
 def main():
     """Main execution function"""
-    print("\n" + "=" * 80)
+    os.makedirs(Results_Dir, exist_ok=True)
+
+    print("\n" + "*" * 50)
     print("  CAPSTONE STATISTICAL ANALYSIS")
-    print("  Research Question: Impact of Teacher Factors on Graduation Rates")
-    print("=" * 80)
+    print("  Research Question: Impact of Teacher Working Hours, Class Size and Expenditure on Graduation Rates")
+    print("*" * 50)
 
     # Load data
     df = load_data()
@@ -716,9 +738,62 @@ def main():
     # Summary report
     create_summary_report(df, model)
 
-    print("\n" + "*" * 80)
+    # Save all results to text file
+    from datetime import datetime
+
+    output_file = '../Results/statistical_results.txt'
+
+    with open(output_file, 'w', encoding='utf-8') as f:
+        f.write("*" * 50 + "\n")
+        f.write("STATISTICAL ANALYSIS RESULTS\n")
+        f.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write("*" * 50 + "\n\n")
+
+        # Dataset Overview
+        f.write("DATASET OVERVIEW\n")
+        f.write("-" * 50 + "\n")
+        f.write(f"Countries: Germany, France, United Kingdom\n")
+        f.write(f"Time Period: 2017-2019\n")
+        f.write(f"Total Observations: {len(df)}\n\n")
+
+        # Descriptive Statistics
+        f.write("DESCRIPTIVE STATISTICS\n")
+        f.write("-" * 50 + "\n")
+        numeric_cols = ['graduation_rate', 'teacher_hours', 'class_size', 'expenditure_pct_gdp']
+        f.write(df[numeric_cols].describe().to_string())
+        f.write("\n\n")
+
+        # Correlation Matrix
+        f.write("CORRELATION MATRIX\n")
+        f.write("-" * 50 + "\n")
+        f.write(df[numeric_cols].corr().to_string())
+        f.write("\n\n")
+
+        # Regression Results
+        f.write("MULTIPLE LINEAR REGRESSION RESULTS\n")
+        f.write("-" * 50 + "\n")
+        f.write(f"R² = {model['rsquared']:.4f}\n")
+        f.write(f"Adjusted R² = {model['rsquared_adj']:.4f}\n")
+        f.write(f"F-statistic = {model['fvalue']:.4f}, p-value = {model['f_pvalue']:.6f}\n\n")
+
+        f.write("Coefficients:\n")
+        predictors = ['teacher_hours', 'class_size', 'expenditure_pct_gdp']
+        for var in predictors:
+            coef = model['params'][var]
+            p_val = model['pvalues'][var]
+            sig = "***" if p_val < 0.001 else "**" if p_val < 0.01 else "*" if p_val < 0.05 else "ns"
+            f.write(f"  {var}: β = {coef:.4f}, p = {p_val:.6f} {sig}\n")
+
+        f.write("\n")
+        f.write("*" * 50 + "\n")
+        f.write("END OF STATISTICAL ANALYSIS\n")
+        f.write("*" * 50 + "\n")
+
+    print(f"\nResults saved to {output_file}")
+
+    print("\n" + "*" * 50)
     print("STATISTICAL ANALYSIS COMPLETE!")
-    print("All results and visualizations saved to ./Results")
+    print("All results and visualizations saved to ../Results")
 
 
 if __name__ == "__main__":

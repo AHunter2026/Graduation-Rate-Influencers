@@ -1,7 +1,5 @@
 import pandas as pd
-import numpy as np
 import os
-from pathlib import Path
 
 ######## CONFIGURATION ########
 
@@ -15,8 +13,8 @@ COUNTRY_NAMES = {
 TARGET_YEARS = [2017, 2018, 2019]
 
 # File paths
-DATA_DIR = './Raw_Data'
-OUTPUT_DIR = './Cleaned_Data'
+DATA_DIR = '../Raw_Data'
+OUTPUT_DIR = '../Cleaned_Data'
 
 # Create output directory if it doesn't exist
 os.makedirs(OUTPUT_DIR, exist_ok=True)
