@@ -39,7 +39,6 @@ def clean_teacher_hours():
     Extracts Upper Secondary (General) education level to align with secondary graduation rates.
     Returns a DataFrame with columns: country, year, teacher_hours
     """
-
     hours_data = []
 
     # Files, sheet names, and column numbers for Upper Secondary (General) Total Working Time
@@ -112,7 +111,6 @@ def clean_class_size():
     Extract and clean average class size data from OECD.
     Returns a DataFrame with columns: country, year, class_size
     """
-
     filepath = os.path.join(DATA_DIR, 'OECD_Avg_Class_Size.csv')
     df = pd.read_csv(filepath)
 
@@ -145,7 +143,6 @@ def clean_expenditure():
     Extract and clean government expenditure on education from World Bank.
     Returns a DataFrame with columns: country, year, expenditure_pct_gdp
     """
-
     filepath = os.path.join(DATA_DIR, 'WB_Expenditures.csv')
     df = pd.read_csv(filepath)
 
@@ -188,7 +185,6 @@ def clean_graduation_rates():
     Extract and clean graduation rates from UNESCO.
     Returns a DataFrame with columns: country, year, graduation_rate
     """
-
     filepath = os.path.join(DATA_DIR, 'UNESCO_Graduation_Rates.csv')
     df = pd.read_csv(filepath)
 
@@ -224,7 +220,6 @@ def merge_datasets(df_hours, df_class, df_expenditure, df_grad):
     Merge all four datasets on country and year.
     Returns final cleaned dataset ready for analysis.
     """
-
     # Start with teacher hours
     df_merged = df_hours.copy()
     print(f"Starting with teacher hours: {df_merged.shape}")
@@ -290,7 +285,7 @@ def validate_dataset(df):
 
     # Show final dataset
     print("FINAL DATASET:")
-    print("=" * 80)
+    print("=" * 50)
     print(df.to_string(index=False))
 
     return len(missing[missing > 0]) == 0
@@ -302,8 +297,8 @@ def main():
     Main execution function that orchestrates the entire cleaning process.
     """
     print("Data Cleaning Script Summary")
-    print("  Target: DEU, FRA, GBR | Years: 2017-2019")
-    print("=" * 80)
+    print(" Target: DEU, FRA, GBR | Years: 2017-2019")
+    print("=" * 50)
 
     # Clean each dataset
     df_hours = clean_teacher_hours()
@@ -320,7 +315,8 @@ def main():
     # Save to CSV
     output_file = os.path.join(OUTPUT_DIR, 'clean_graduation_influencers.csv')
     df_final.to_csv(output_file, index=False)
-    print(f"\nCleaned data saved to: {output_file}")
+    print('\n' + "*" * 50)
+    print(f"Cleaned data saved to: {output_file}")
 
     # Also save detailed versions for each dataset
     df_hours.to_csv(os.path.join(OUTPUT_DIR, 'clean_teacher_hours.csv'), index=False)
@@ -331,11 +327,13 @@ def main():
     print("Individual cleaned datasets also saved")
 
     if is_complete:
+        print("*" * 50)
         print("DATA CLEANING COMPLETE - READY FOR ANALYSIS!")
-        print("=" * 80)
+        print("*" * 50)
     else:
+        print("*" * 50)
         print("DATA CLEANING COMPLETE - CHECK MISSING VALUES")
-        print("=" * 80)
+        print("*" * 50)
 
     return df_final
 

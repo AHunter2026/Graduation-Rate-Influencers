@@ -8,8 +8,6 @@ from sklearn.metrics import mean_squared_error
 import os
 import warnings
 
-from Scripts.Cleaning_Merging import DATA_DIR
-
 warnings.filterwarnings('ignore')
 
 # Get directory where script is
@@ -31,9 +29,9 @@ plt.rcParams['font.size'] = 10
 def load_data():
     """Load the cleaned capstone dataset"""
     df = pd.read_csv(os.path.join(Data_Dir, 'clean_graduation_influencers.csv'))
-    print("*" * 80)
+    print("*" * 50)
     print("DATA LOADED")
-    print("*" * 80)
+    print("*" * 50)
     print(f"\nDataset shape: {df.shape}")
     print(f"\nColumns: {df.columns.tolist()}")
     print(f"\nFirst few rows:")
