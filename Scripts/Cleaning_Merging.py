@@ -199,7 +199,7 @@ def clean_graduation_rates():
 
     print(f"After filtering: {df_filtered.shape}")
 
-    # Extract the data we need
+    # Extract the data that is needed
     df_filtered = df_filtered.rename(columns={
         'geoUnit': 'country',
         'value': 'graduation_rate'
